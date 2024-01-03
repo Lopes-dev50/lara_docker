@@ -1,0 +1,28 @@
+version: "3.3"
+services: 
+    web:
+        build: .
+        working_dir: /var/www/laravel/
+        volumes: 
+            - ./app/laravel:/var/www/laravel/
+        ports: 
+            - 8080:80
+    db:
+        image: mysql:latest
+        restart: always
+        environment: 
+            MYSQL_DATABASE: laravel
+            MYSQL_ALLOW_EMPTY_PASSWORD: 1
+        volumes:
+            - ./app/data:/var/lib/mysql
+        ports: 
+            - 3306:3306
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        restart: always
+        depends_on:
+            - db
+        ports:
+            - 8081:80  
+
+       
